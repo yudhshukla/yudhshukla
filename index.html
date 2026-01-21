@@ -1,1 +1,71 @@
-I have no idea what I am suppposed to do for this project.
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Yudh Shukla</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="logo" href="#intro">Yudh Shukla</a>
+      <ul class="nav-links">
+        <li><a href="#intro">Home</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="intro" class="intro">
+      <h1>Hi! I'm Yudh</h1>
+      <p class="role">A short one-line description of what you do (student, web dev, designer, etc.).</p>
+      <p class="bio">Two-sentence bio: what you build, technologies you like, and what you're looking for.</p>
+      <p class="cta">
+        <a class="btn" href="#projects">See my work</a>
+        <a class="btn ghost" href="#contact">Contact me</a>
+      </p>
+    </section>
+
+    <section id="projects" class="projects">
+      <h2>Projects</h2>
+      <div class="project-grid">
+        <!-- Copy this card for each project and replace placeholders -->
+        <article class="project-card">
+          <div class="project-thumb">Image</div>
+          <h3>Project Title</h3>
+          <p class="project-desc">Short description (what problem it solves / tech used).</p>
+          <p class="project-links">
+            <a href="#" target="_blank" rel="noopener">Live</a> ·
+            <a href="#" target="_blank" rel="noopener">Code</a>
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2>Contact</h2>
+      <p>Prefer email? <strong>hshukla@andrew.cmu.edu</strong></p>
+      <form id="contactForm">
+        <label>
+          Yudh Shukla
+          <input name="name" required />
+        </label>
+        <label>
+          Message
+          <textarea name="message" rows="4" required></textarea>
+        </label>
+        <button type="submit" class="btn">Send</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Yudh Shukla <a href="#">GitHub</a></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
