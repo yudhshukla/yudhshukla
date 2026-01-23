@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
 	// nav toggle for small screens
 	const toggle = document.querySelector('.nav-toggle');
-	const menu = document.querySelector('.nav-menu');
+	const menu = document.querySelector('.nav-links');
 	if (toggle && menu) {
 		toggle.addEventListener('click', () => menu.classList.toggle('show'));
 	}
@@ -25,21 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
 	const year = document.getElementById('year');
 	if (year) year.textContent = new Date().getFullYear();
 
-	// simple contact form handler (no backend)
-	const form = document.getElementById('contact-form') || document.getElementById('contactForm');
-	if (form) {
-		form.addEventListener('submit', (e) => {
-			e.preventDefault();
-			const btn = form.querySelector('button[type="submit"]');
-			const orig = btn ? btn.textContent : null;
-			if (btn) btn.textContent = 'Sending…';
-			// simulate network delay
-			setTimeout(() => {
-				if (btn) btn.textContent = 'Sent ✓';
-				form.reset();
-				setTimeout(() => { if (btn) btn.textContent = orig; }, 2000);
-			}, 700);
-		});
-	}
+	// no contact form — contact links are static
 });
 

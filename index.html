@@ -3,15 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Your Name — Personal Website</title>
+  <title>Yudh Shukla</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="site-header">
-    <nav class="nav">
-      <a class="brand" href="#home">Your Name</a>
+    <nav class="nav container">
+      <a class="brand" href="#home">Yudh Shukla</a>
+      <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
       <ul class="nav-links">
-        <li><a href="#home">Home</a></li>
+        <li><a href="#home">About Me</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -20,45 +21,63 @@
 
   <main>
     <section id="home" class="hero container">
-      <h1>Hi! I'm Yudh</h1>
-      <p class="role">A short one-line description of what you do (student, web dev, designer, etc.).</p>
-      <p class="bio">Two-sentence bio: what you build, technologies you like, and what you're looking for.</p>
-      <p class="cta">
-        <a class="btn" href="#projects">See my work</a>
-        <a class="btn ghost" href="#contact">Contact me</a>
-      </p>
+      <div class="hero-text">
+        <h1>Hi! I'm Yudh, </h1>
+        <p class="role">A student at Carnegie Mellon studying Cognitive Science and Human-Computer Interaction.</p>
+        <p class="bio">I like TAing 15-112, 说中文, learning about public transporation, reading books, watching basketball, eating the results of my baking, looking at Google Maps, and sitting in my Gates 4100 corner.</p>
+      </div>
+      <div class="hero-photo">
+        <img class="hero-image" src="images/combee.png" alt="yud">
+      </div>
     </section>
 
-    <section id="projects" class="projects">
+    <section id="projects" class="projects container">
       <h2>Projects</h2>
       <div class="project-grid">
-        <!-- Copy this card for each project and replace placeholders -->
         <article class="project-card">
-          <div class="project-thumb">Image</div>
-          <h3>Project Title</h3>
-          <p class="project-desc">Short description (what problem it solves / tech used).</p>
-          <p class="project-links">
-            <a href="#" target="_blank" rel="noopener">Live</a> ·
-            <a href="#" target="_blank" rel="noopener">Code</a>
-          </p>
+          <img src="https://via.placeholder.com/800x450?text=Project+1" alt="Project 1 screenshot">
+          <div class="card-body">
+            <h3>Project One</h3>
+            <p class="project-desc">Short description — goals, tech used, and highlights. Replace with your write-up summary.</p>
+            <p class="project-links"><a href="#" target="_blank" rel="noopener">Code</a> · <a href="#" target="_blank" rel="noopener">Write-up</a> · <a href="#" target="_blank" rel="noopener">Live</a></p>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <img src="https://via.placeholder.com/800x450?text=Project+2" alt="Project 2 screenshot">
+          <div class="card-body">
+            <h3>Project Two</h3>
+            <p class="project-desc">Short description — goals, tech used, and highlights. Replace with your write-up summary.</p>
+            <p class="project-links"><a href="#" target="_blank" rel="noopener">Code</a> · <a href="#" target="_blank" rel="noopener">Write-up</a> · <a href="#" target="_blank" rel="noopener">Live</a></p>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <img src="https://via.placeholder.com/800x450?text=Project+3" alt="Project 3 screenshot">
+          <div class="card-body">
+            <h3>Project Three</h3>
+            <p class="project-desc">Short description — goals, tech used, and highlights. Replace with your write-up summary.</p>
+            <p class="project-links"><a href="#" target="_blank" rel="noopener">Code</a> · <a href="#" target="_blank" rel="noopener">Write-up</a> · <a href="#" target="_blank" rel="noopener">Live</a></p>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <img src="https://via.placeholder.com/800x450?text=Project+4" alt="Project 4 screenshot">
+          <div class="card-body">
+            <h3>Project Four</h3>
+            <p class="project-desc">Short description — goals, tech used, and highlights. Replace with your write-up summary.</p>
+            <p class="project-links"><a href="#" target="_blank" rel="noopener">Code</a> · <a href="#" target="_blank" rel="noopener">Write-up</a> · <a href="#" target="_blank" rel="noopener">Live</a></p>
+          </div>
         </article>
       </div>
     </section>
 
-    <section id="contact" class="contact">
-      <h2>Contact</h2>
-      <p>Prefer email? <strong>hshukla@andrew.cmu.edu</strong></p>
-      <form id="contactForm">
-        <label>
-          Yudh Shukla
-          <input name="name" required />
-        </label>
-        <label>
-          Message
-          <textarea name="message" rows="4" required></textarea>
-        </label>
-        <button type="submit" class="btn">Send</button>
-      </form>
+    <section id="contact" class="contact container">
+      <ul class="contact-links">
+        <li>Email: <a href="mailto:hshukla@andrew.cmu.edu">hshukla@andrew.cmu.edu</a></li>
+        <li>GitHub: <a href="https://github.com/yudhshukla" target="_blank" rel="noopener">github.com/yudhshukla</a></li>
+        <li>LinkedIn: <a href="https://www.linkedin.com/in/yudh-s-640b71319/" target="_blank" rel="noopener">linkedin.com/in/yudh</a></li>
+      </ul>
     </section>
   </main>
 
