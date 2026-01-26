@@ -1,0 +1,729 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Comm(you)nity</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="25b36fd4-09d8-81ec-960e-dcedb433521c" class="page sans"><header><img class="page-cover-image" src="images/project2.png" style="object-position:center 50%"/><h1 class="page-title" dir="auto">Comm(you)nity</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><h1 id="26036fd4-09d8-80cc-a42a-fc62d10e3cb2" class=""><mark class="highlight-purple">Challenge</mark></h1></div><div style="display:contents" dir="auto"><p id="28736fd4-09d8-80b0-b0da-f4070a56d420" class="">When you move to a new city or even just want to connect with your neighborhood, it&#x27;s easy to feel overwhelmed. The common feeling is that everything fun is happening somehow somewhere else and nowhere else at the same time, because there&#x27;s no single, intuitive source for what&#x27;s happening at the moment. Or at other times, there’s no easy way to find which activities align with your interests and your schedule.</p></div><div style="display:contents" dir="auto"><p id="28736fd4-09d8-8050-b6f9-fd15deff06de" class="">
+</p></div><div style="display:contents" dir="auto"><p id="28736fd4-09d8-8094-85eb-e5f3bc5d0a45" class="">Existing solutions are static or outdated, like travel guides for top tourist spots, or Google Maps, which is primarily for business listings. There&#x27;s a missing piece to link passive searching and finding relevant and meaningful community discovery. We found that what people really want isn&#x27;t a directory, but more so an intuitive and constantly updating tool that helps them find their community. </p></div><div style="display:contents" dir="auto"><p id="28736fd4-09d8-8090-85d0-cc074d47a46d" class="">
+</p></div><div style="display:contents" dir="auto"><p id="28736fd4-09d8-8033-b512-dca6ae68235d" class="">We started this project to create an app, <em>Comm(you)nity, </em>that would close the gap and making event discovery feel exciting and accessible for everyone. I worked on a team with two designers, one backend engineer, and one frontend engineer, serving as a UX designer and researcher. </p></div><div style="display:contents" dir="auto"><p id="28536fd4-09d8-80ee-b507-cc67573258d9" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="26036fd4-09d8-800d-a8a5-ce5aa86da3e4"/></div><div style="display:contents" dir="auto"><h1 id="26036fd4-09d8-80a1-b337-e9a8b7e95191" class=""><mark class="highlight-purple">Questions</mark></h1></div><div style="display:contents" dir="auto"><p id="26236fd4-09d8-8068-afb6-d8650694db24" class="">Our goal was to design and develop a user-centric mobile app that could connect peers through time and interest-based event discovery. To achieve this, the design/research team focused on two key questions:</p></div><div style="display:contents" dir="auto"><p id="27d36fd4-09d8-800b-a255-cdc7d11b179c" class="">
+</p></div><div style="display:contents" dir="auto"><ol type="1" id="28736fd4-09d8-803f-8dba-e758fb94a18e" class="numbered-list" start="1"><li>How can a user-centric design make the app&#x27;s functionality intuitive and reflect people’s needs?</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="26236fd4-09d8-8084-98f3-c9154cd512dc" class="numbered-list" start="2"><li>What social/gamified components can be implemented to make the experience more encouraging for building social connections?</li></ol></div><div style="display:contents" dir="auto"><p id="26036fd4-09d8-801f-bc6f-c9477e2ddb3d" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="26036fd4-09d8-8008-b5ce-fa20ff17133c"/></div><div style="display:contents" dir="auto"><h1 id="26036fd4-09d8-80b5-86ec-c3715896a692" class=""><mark class="highlight-purple">R</mark><mark class="highlight-purple"><strong>esearch Methodology</strong></mark></h1></div><div style="display:contents" dir="auto"><p id="26036fd4-09d8-8015-bb18-dba2c88656ef" class="">I used a design and development approach, conducting competitive analysis followed by an iterative prototyping process.</p></div><div style="display:contents" dir="auto"><h2 id="26036fd4-09d8-8062-94df-edafa9e3ce6d" class=""><mark class="highlight-gray"><strong>Competitive Analysis</strong></mark></h2></div><div style="display:contents" dir="auto"><h3 id="26036fd4-09d8-807a-abb2-c69d1d66575b" class=""><strong>Objective</strong></h3></div><div style="display:contents" dir="auto"><p id="26036fd4-09d8-8074-a411-c64f313a1ac5" class="">To identify the shortcomings of existing event discovery solutions.</p></div><div style="display:contents" dir="auto"><h3 id="26036fd4-09d8-8043-9e66-c2696e53634f" class=""><strong>Process</strong></h3></div><div style="display:contents" dir="auto"><p id="26036fd4-09d8-8057-8192-feb0f3ba8ec2" class="">I analyzed the pros and cons of common solutions like TripAdvisor, GoogleMaps, and social media sites like Instagram. I studied how their events were presented and which filtering options were available. I then synthesized my findings to highlight key gaps in these apps and showcased the strengths and weaknesses of each in this table:</p></div><div style="display:contents" dir="auto"><p id="26236fd4-09d8-8096-8a65-e1999a1a7a05" class=""> </p></div><div style="display:contents" dir="ltr"><table id="26236fd4-09d8-8012-b184-cb035dccb4f6" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="26236fd4-09d8-80ae-af75-dc7d8f2dd12a"><td id="tYMw" class="" style="width:110.3984375px"><strong>Platform</strong></td><td id="Uf&lt;H" class="" style="width:159.3984375px"><strong>Strengths</strong></td><td id="pNqX" class="" style="width:157.3984375px"><strong>Weaknesses</strong></td><td id="}zAo" class="" style="width:150.3984375px"><strong>Visuals</strong></td><td id="NCbV" class="" style="width:146.3984375px"><strong>Our opportunity</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="26236fd4-09d8-80d2-bb44-c4b42a1ad5e5"><td id="tYMw" class="" style="width:110.3984375px">TripAdvisor</td><td id="Uf&lt;H" class="" style="width:159.3984375px">Extensive reviews, trusted ratings, detailed business information, ability to book within the platform, details and itinerary screen</td><td id="pNqX" class="" style="width:157.3984375px">Content is often static and outdated. Lacks a social component for discovering events between friends</td><td id="}zAo" class="" style="width:150.3984375px">List UI with event cards, relies heavily on user photos</td><td id="NCbV" class="" style="width:146.3984375px">To integrate a social component to see what events one’s friends are interested in</td></tr></div><div style="display:contents" dir="ltr"><tr id="26236fd4-09d8-80ca-a045-c73f08b06c15"><td id="tYMw" class="" style="width:110.3984375px">Google Maps</td><td id="Uf&lt;H" class="" style="width:159.3984375px">Nicely integrated with location services, includes navigation, user-generated photos and reviews</td><td id="pNqX" class="" style="width:157.3984375px">Poor filtering for specific events. Focus is on business listings and not dynamic events</td><td id="}zAo" class="" style="width:150.3984375px">Map UI, each “event” is just a point on a map  opening up to user photos</td><td id="NCbV" class="" style="width:146.3984375px">To build a platform dedicated to dynamic events like concerts and festivals</td></tr></div><div style="display:contents" dir="ltr"><tr id="26236fd4-09d8-80cd-a42e-c8aef9e9143b"><td id="tYMw" class="" style="width:110.3984375px">Instagram</td><td id="Uf&lt;H" class="" style="width:159.3984375px">Real-time content by the community, can easily discover what&#x27;s trending, can see what friends are interacting with</td><td id="pNqX" class="" style="width:157.3984375px">No centralized event hub. Information is difficult to search and filter for by time/date. Content is ephemeral and can be hard to find later</td><td id="}zAo" class="" style="width:150.3984375px">Photo/video UI, dedicated section for comments, requires significant scrolling</td><td id="NCbV" class="" style="width:146.3984375px">To provide a centralized event hub with easy filtering and searching</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><h2 id="26836fd4-09d8-80af-9fba-f6eac7239dd9" class=""><mark class="highlight-gray">Information Architecture</mark></h2></div><div style="display:contents" dir="auto"><h3 id="26836fd4-09d8-805f-8957-f2099ec31c23" class="">Objective</h3></div><div style="display:contents" dir="auto"><p id="26836fd4-09d8-80d3-a0e2-c1ae45376f97" class="">To visually map out the entire app&#x27;s structure to ensure our app’s navigation system is intuitive and comprehensive. We needed this step to establish a common starting ground for developers and designers to work from. </p></div><div style="display:contents" dir="auto"><h3 id="26836fd4-09d8-8052-8117-c1115c848219" class="">Process</h3></div><div style="display:contents" dir="auto"><p id="26836fd4-09d8-8093-ba4c-f84ba21646e3" class="">We created an information architecture chart to define the relationships between different pages and features. The chart begins with the onboarding page, immediately goes to the Home page, and branches out to key sections such as the Quick explore, Search, and Friends pages, which then further branch out to specialized actions like sending friend requests, liking events, or accessing one’s badges. We agreed on this mapping through iterative wire-framing and analyzing our competitor apps’ architectures, intending to fill in gaps they may have with their user flows.</p></div><div style="display:contents" dir="ltr"><figure id="26836fd4-09d8-80ad-a16e-db1299f978e3" class="image"><a href="Comm(you)nity/Information_architechture.png"><img style="width:1152px" src="images/reports/comm(you)nity/infoarch.png"/></a></figure></div><div style="display:contents" dir="auto"><h2 id="26036fd4-09d8-8009-b1e0-e60a6c61424a" class=""><mark class="highlight-gray">Lo-fi Prototyping </mark></h2></div><div style="display:contents" dir="auto"><h3 id="26036fd4-09d8-803a-a85c-fee8d7c3f1d5" class=""><strong>Objective</strong></h3></div><div style="display:contents" dir="auto"><p id="26036fd4-09d8-800c-bfba-c5903e81ce88" class="">To define the basic structure and core user flows of the app without the distraction of detailed visual design. This allowed us to quickly test and iterate on the app&#x27;s functionality.</p></div><div style="display:contents" dir="auto"><h3 id="26036fd4-09d8-8089-8d62-fbfcc9c273ab" class="">Process</h3></div><div style="display:contents" dir="auto"><p id="26036fd4-09d8-8087-bef5-ffbee4ce5c55" class="">We began by sketching out key user flows, such as the onboarding process, event discovery, and event saving. We referred to our information architecture chart and developed neater wireframes, making sure that each page had an intuitive path to whichever actions branched off it. Our goal was to map out the most direct path a user would take to accomplish their goals. We then created a low-fidelity prototype in Figma to visualize these interactions, focusing on a minimal interface with key buttons, text fields, and placeholders where our app logo and pictures for events would later go.</p></div><div style="display:contents" dir="auto"><p id="26836fd4-09d8-8091-b6c4-f0a1a7f067d6" class="">
+</p></div><div style="display:contents" dir="auto"><p id="26836fd4-09d8-80f0-8cfb-d047fa82942d" class="">We focused on the following key screens to establish the app&#x27;s core functionality:</p></div><div style="display:contents" dir="auto"><ul id="26836fd4-09d8-800a-9265-e5d30435ff1b" class="bulleted-list"><li style="list-style-type:disc">Login/sign-up page: To establish a user&#x27;s identity in context of the app</li></ul></div><div style="display:contents" dir="auto"><ul id="26836fd4-09d8-804a-95fe-ed2fbf82e871" class="bulleted-list"><li style="list-style-type:disc">Main discovery page:<strong> </strong>The central hub for finding events with a search bar and a list of event cards.</li></ul></div><div style="display:contents" dir="auto"><ul id="26836fd4-09d8-80d5-8b84-e23981cc98d7" class="bulleted-list"><li style="list-style-type:disc">Event details page: To present detailed information about a specific event. Accessed via clicking on an event from the main discovery page</li></ul></div><div style="display:contents" dir="auto"><p id="28536fd4-09d8-800e-b93b-e4e44ec1fcc5" class="">
+</p></div><div style="display:contents" dir="ltr"><figure id="26636fd4-09d8-80ef-b01a-c0a33990c1e9" class="image"><a href="Comm(you)nity/3cad4519-9dc6-4adc-aaec-328951f5b08c.png"><img style="width:864px" src="images/reports/comm(you)nity/lofi.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="27d36fd4-09d8-805f-b642-d8c9601f281c" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="26036fd4-09d8-805f-a872-dbe0e719f9d1"/></div><div style="display:contents" dir="auto"><h2 id="26036fd4-09d8-803a-acb4-c02f71c9e655" class=""><mark class="highlight-gray">Task-Based User Testing</mark></h2></div><div style="display:contents" dir="auto"><h3 id="27336fd4-09d8-8065-abf5-f48e8e31ce6d" class=""><strong>Objective</strong></h3></div><div style="display:contents" dir="auto"><p id="27336fd4-09d8-805f-8a63-dee70c96c5bf" class="">To evaluate the user&#x27;s ease of learning of the app&#x27;s core functionalities by identifying any usability issues or points of confusion. We focused on walking through event discovery and saving events. This step made sure that the users’ mental models and needs were aligned with our design choices.</p></div><div style="display:contents" dir="auto"><h3 id="27336fd4-09d8-8088-ae7d-cb9ffc63dbd0" class=""><strong>Process</strong></h3></div><div style="display:contents" dir="auto"><p id="27336fd4-09d8-803b-9207-e5e32b2b5612" class="">We conducted moderated task-based user tests to simulate a new user&#x27;s journey through the app. We presented 10 participants with a task, in this case, finding a specific event and saving it, and observed them as they completed it without prior instruction. We documented how they navigated through the app, any assumptions they made, and any points of friction they encountered. Following the walkthrough, we asked participants a few survey questions to gather additional feedback. We permitted them to voice concerns as they went through the process, but informed them that questions about the interface and how to use it would not be answered until after they were done with the walkthrough.</p></div><div style="display:contents" dir="auto"><h3 id="27336fd4-09d8-8065-9c70-d5e1eae5eef6" class=""><strong>Key Findings </strong></h3></div><div style="display:contents" dir="auto"><p id="27336fd4-09d8-807e-9b39-ccc895f3ab93" class="">Synthesizing our findings, we identified several key areas for improvement.<div class="indented"><div style="display:contents" dir="auto"><ul id="27336fd4-09d8-807b-8091-e3aa171c98e7" class="bulleted-list"><li style="list-style-type:disc">Participants wanted a way to keep track of events they were interested in or planning to attend.<div style="display:contents" dir="auto"><ul id="27336fd4-09d8-8064-8fce-d3f140b9b7a3" class="bulleted-list"><li style="list-style-type:circle">Based on this feedback, we started drafting a new calendar page where users can visualize the days and times of their saved events. Additionally, we added a filter to the calendar so users can also see when their friends&#x27; saved events were occurring.</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="27336fd4-09d8-80e2-a6e3-e2f72b366fe0" class="bulleted-list"><li style="list-style-type:disc">Some participants wanted to edit their interests after initial entry but could not find a way to do so.<div style="display:contents" dir="auto"><ul id="27336fd4-09d8-8047-8d27-d7e199c98c47" class="bulleted-list"><li style="list-style-type:circle">We addressed this by adding an option to reselect interests on the profile page and indicated on the initial selection screen that they can be modified later.</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="27336fd4-09d8-80f1-acea-fbaf453b3461" class="bulleted-list"><li style="list-style-type:disc">One participant inquired about the visibility of their events to others, and if there was a way to toggle this.<div style="display:contents" dir="auto"><ul id="27336fd4-09d8-80b9-9b7f-c919fd467114" class="bulleted-list"><li style="list-style-type:circle">We noted the idea of of privacy toggle in profile &gt; settings where users have the options to keep their saved events private which they can modify at any time in, which we’ll implement once we develop our settings page</li></ul></div></li></ul></div></div></p></div><div style="display:contents" dir="auto"><h2 id="26b36fd4-09d8-8080-a3eb-ccb2bd4b7760" class=""><mark class="highlight-gray">Hi-fi Prototyping</mark></h2></div><div style="display:contents" dir="auto"><h3 id="27336fd4-09d8-8056-8d04-ca26572e3822" class=""><strong>Objective</strong></h3></div><div style="display:contents" dir="auto"><p id="27336fd4-09d8-8012-980a-e21e06c5fe42" class="">The objective of this stage was to finalize the user interface and create a polished experience that brought the design to life. My team and I incorporated the feedback and findings from our cognitive walkthrough into our revised interface. I created a visual design system to ensure consistency before applying it to the final high-fidelity screens.</p></div><div style="display:contents" dir="ltr"><figure id="27336fd4-09d8-8038-b2ab-c60b8bbbed5c" class="image"><a href="Comm(you)nity/Assets.png"><img style="width:528px" src="images/reports/comm(you)nity/Assets.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="26b36fd4-09d8-802d-8f70-da481c7f703d" class="">Process</h3></div><div style="display:contents" dir="auto"><p id="27336fd4-09d8-8022-854a-fcb30df06ab0" class="">This is where all the pieces came together! We brought our research and wireframes to life with a modern aesthetic. I first developed a visual design system to ensure consistency across the entire app. I established a bright color palette that felt exciting and inviting and selected a clean typography to ensure every piece of information was easy to read. We designed our own iconography with a pixelated style to reflect the app&#x27;s gamified spirit. Using our style guide, we created the final screens for our key user flows. The final prototype is an interactive experience that allows anyone interested in learning more about our project to click through the app and see the user journey for themselves. The final prototype showcases the home screen, an event discovery page, and a calendar view, the app’s core functionalities.</p></div><div style="display:contents" dir="ltr"><figure id="28736fd4-09d8-80cd-9ad5-ea89c63298a4" class="image"><a href="Comm(you)nity/8553f5d9-1ebd-47f7-b984-3194c6b9ac52.png"><img style="width:864px" src="images/reports/comm(you)nity/hifi.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="27d36fd4-09d8-80c8-9668-f565048567a1" class="">
+</p></div><div style="display:contents" dir="ltr"><figure id="27336fd4-09d8-80df-bbfd-e37c9490e052" class="image"><a href="Comm(you)nity/Screenshot_2025-09-18_at_8.12.21_PM.png"><img style="width:576px" src="images/reports/comm(you)nity/cover.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="27336fd4-09d8-8078-b3f2-ce60bbff5881" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="27336fd4-09d8-8062-86aa-dd4e47cf3af6"/></div><div style="display:contents" dir="auto"><h1 id="27336fd4-09d8-805b-8962-c82d33fd0c3d" class=""><mark class="highlight-purple">A Look Ahead: Gamification &amp; Badges!</mark></h1></div><div style="display:contents" dir="auto"><p id="27336fd4-09d8-8027-982b-f13e105aea7d" class="">While our high-fidelity prototype showcases the core functionality, we are currently working on a key feature for a future iteration: a gamified badge system! This feature was inspired by platforms like Duolingo, where the app rewards users for their progress to build a sense of accomplishment. Badges can feature simply a user’s streak, or can be specific to actions they’ve taken inside the app, such as if they attended several sports or cultural events. </p></div><div style="display:contents" dir="auto"><p id="27336fd4-09d8-8041-832c-c3c5ed554861" class="">Our competitive analysis showed that a major gap in the event discovery market is the lack of a strong social component. Badges allow users to connect with other users who frequently attend the same kinds of events as them, and could even motivate users to get more involved in their community to obtain badges that reward going to events with friends, or perhaps making a new friend at an event. The current state of our badge design is pictured below:</p></div><div style="display:contents" dir="ltr"><figure id="27d36fd4-09d8-80ce-8f8e-d7bcde6817aa" class="image"><a href="Comm(you)nity/Screenshot_2025-09-29_at_1.18.23_PM.png"><img style="width:576px" src="images/reports/comm(you)nity/badges.png"/></a></figure></div><div style="display:contents" dir="auto"><hr id="26036fd4-09d8-8065-9e33-f399f676a82e"/></div><div style="display:contents" dir="auto"><h1 id="26036fd4-09d8-80a4-afeb-ed7cec7566f9" class=""><mark class="highlight-purple">Reflection</mark></h1></div><div style="display:contents" dir="auto"><p id="26b36fd4-09d8-806a-98c8-ce75350a2beb" class="">This project has been a deeply rewarding experience; it let me take a product from its initial, messy problem state to a high-fidelity prototype. It provided a unique opportunity to act as both a designer and a researcher, which taught me the importance of cross-functional empathy. I gained a completely new perspective on the product lifecycle. This project also taught me the importance of iterative design; instead of trying to create a perfect product from the beginning, we continuously refined our designs based on user research and team feedback. (You can view the final design and prototype links at the top of this document!)</p></div><div style="display:contents" dir="auto"><p id="28536fd4-09d8-8038-b667-d405b7d0fea6" class="">
+</p></div><div style="display:contents" dir="auto"><p id="26b36fd4-09d8-802b-ae63-d534a67392a5" class="">Looking ahead, I believe the next essential step for Comm(you)nity is to conduct usability testing on our high-fidelity prototype. This will validate our design decisions and provide key insights for our next iteration, and inform which user needs we should address and then convey them to the backend and frontend developers. We also have plans to add a feature for users to create their own events and a community forum to further build on the app&#x27;s social foundation, and allow for dynamic events to be explored by our users as well, not just business listings. My goal remains the same as when I started: to ensure that no matter how new someone is to a city, they have an intuitive path to finding where they truly belong. </p></div><div style="display:contents" dir="auto"><p id="25b36fd4-09d8-81c2-83e4-e0191a10c72f" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="25b36fd4-09d8-819e-8018-ec85c69337bd"/></div><div style="display:contents" dir="auto"><p id="25b36fd4-09d8-811f-aec7-dce2f0b356c9" class="">
+</p></div><div style="display:contents" dir="auto"><div id="25b36fd4-09d8-8162-9bd2-db238b6f2a88" class="column-list"><div style="display:contents" dir="auto"><div id="25b36fd4-09d8-8149-a339-ea710c42f6dc" style="width:75.33396004893417%" class="column"><div style="display:contents" dir="auto"><p id="25b36fd4-09d8-8111-aa41-d9b656d38a20" class="">
+</p></div></div></div><div style="display:contents" dir="auto"><div id="25b36fd4-09d8-8118-9422-cd17ffab3803" style="width:3.5240315485267653%" class="column"><div style="display:contents" dir="auto"><p id="25b36fd4-09d8-81c7-9ad8-d79202020d62" class="">
+</p></div></div></div><div style="display:contents" dir="auto"><div id="25b36fd4-09d8-8103-8292-d8bd6a9b3feb" style="width:21.142008402539147%" class="column"><div style="display:contents" dir="auto"><p id="25b36fd4-09d8-81e9-a177-e41b6ebb34a7" class="">
+</p></div></div></div></div></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,729 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>When Apps Lie: Uncovering the Real Cause Behind Transit App Stress</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="25b36fd4-09d8-8161-a950-d50f06cb0ec4" class="page sans"><header><img class="page-cover-image" src="images/project1.png" style="object-position:center 32.04%"/><h1 class="page-title" dir="auto">When Apps Lie: Uncovering the Real Cause Behind Transit App Stress</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><h1 id="25b36fd4-09d8-8132-8929-c852b8418150" class=""><mark class="highlight-blue">Challenge</mark></h1></div><div style="display:contents" dir="auto"><p id="28736fd4-09d8-8010-b402-ca32ed16f935" class="">For Pittsburgh Regional Transit (PRT) riders, commutes tend to be a source of unnecessary stress. Commuters are often left wondering if the bus is coming at all, having to wait excessively long in discomfort, sometimes even missing the bus due to lack of communication about rerouting or delays.  </p></div><div style="display:contents" dir="auto"><p id="28736fd4-09d8-8079-9495-d8bf1891509b" class="">
+</p></div><div style="display:contents" dir="auto"><p id="28736fd4-09d8-8094-bbc0-c00c98c40308" class="">This leads to users ultimately losing trust in the service. My project aims to investigate this “trust gap&quot; by auditing the accuracy of three popular tracking apps, Google Maps, Transit, Ready2Ride. This will allow me to understand the emotional and practical impact on daily riders, and then propose a redesign to the tracking experience to rebuild commuters’ confidence.</p></div><div style="display:contents" dir="auto"><p id="28536fd4-09d8-80c6-bd44-f3bc2760e03d" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="25c36fd4-09d8-8006-ba67-c4a0348fae4d"/></div><div style="display:contents" dir="auto"><h1 id="25b36fd4-09d8-81da-bd3d-da7c28ffa048" class=""><mark class="highlight-blue">Questions</mark></h1></div><div style="display:contents" dir="auto"><p id="25c36fd4-09d8-8001-ae4d-e238eef16570" class="">My goal was to understand the user experience around real-time transit information and identify opportunities for improvement. To achieve this, I conducted my research with the intention to uncover more about these three key questions:</p></div><div style="display:contents" dir="auto"><ol type="1" id="25c36fd4-09d8-8007-a1d0-ecf2fca58d7b" class="numbered-list" start="1"><li>How accurate is the real-time data provided by Google Maps, Transit, and Ready2Ride for PRT buses?</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="25c36fd4-09d8-80b2-be87-df51ff6e8669" class="numbered-list" start="2"><li>What are the key user pain points and behaviors related to navigating inaccurate information?</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="25c36fd4-09d8-802b-b809-d906ac6b623e" class="numbered-list" start="3"><li>How can a redesigned mobile app better serve the needs of a commuter in a way that builds trust and reduces anxiety?</li></ol></div><div style="display:contents" dir="auto"><p id="25c36fd4-09d8-80d6-90b1-fba859274a3d" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="25c36fd4-09d8-80d3-b97c-c639bb7f3969"/></div><div style="display:contents" dir="auto"><h1 id="25b36fd4-09d8-81a8-931d-df8c04e9d06a" class=""><mark class="highlight-blue">R</mark><mark class="highlight-blue"><strong>esearch Methodology</strong></mark></h1></div><div style="display:contents" dir="auto"><p id="25c36fd4-09d8-8020-a5c5-de604472aecf" class="">I used a mixed-methods approach, conducting quantitative data analysis and holding qualitative user studies to gain a holistic view of the problem.</p></div><div style="display:contents" dir="auto"><h2 id="25b36fd4-09d8-8174-a789-c4a81453919e" class=""><mark class="highlight-gray"><strong>Quantitative Study: </strong></mark><mark class="highlight-gray">Trust Gap Analysis</mark></h2></div><div style="display:contents" dir="auto"><h3 id="25c36fd4-09d8-8098-9291-d36e755ac448" class=""><strong>Objective</strong></h3></div><div style="display:contents" dir="auto"><p id="25c36fd4-09d8-800f-8a57-d278a1e1488c" class="">To quantify the discrepancy between reported and actual bus departure times.</p></div><div style="display:contents" dir="auto"><h3 id="25c36fd4-09d8-8077-905a-ed4237c90f5e" class=""><strong>Process</strong></h3></div><div style="display:contents" dir="auto"><p id="25c36fd4-09d8-8073-a95a-cdb58561f5ab" class="">For 30 consecutive days, I collected and compared the reported departure times from Google Maps, Transit, and Ready2Ride against the observed, actual departure times of the 71D Hamilton Short bus route. Data was collected twice daily, once during morning hours (9AM-11AM) and once during afternoon/evening hours (5PM-9PM) at the Fifth and McPherson and Fifth and Clyde bus stops, respectively. The delay accuracy was calculated with this equation:</p></div><div style="display:contents" dir="auto"><figure id="25c36fd4-09d8-8003-804e-e4877609c3bc" class="equation"><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo stretchy="false">(</mo><mtext>reported departure time</mtext><mo>−</mo><mtext>actual departure time)</mtext></mrow><annotation encoding="application/x-tex">(\text{reported departure time}- \text{actual departure time)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord text"><span class="mord">reported departure time</span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">actual departure time)</span></span></span></span></span></span></div></figure></div><div style="display:contents" dir="auto"><ul id="25c36fd4-09d8-8015-a5cb-ce843b3f0d3c" class="bulleted-list"><li style="list-style-type:disc">For example, if Transit reports the 71D will depart at 9:02 AM but it actually departs at 9:05, the delay accuracy would be calculated to be -3, indicating the app reported the bus to come 3 minutes early</li></ul></div><div style="display:contents" dir="auto"><h2 id="25c36fd4-09d8-802a-891e-f5b83bb922c7" class=""><mark class="highlight-gray"><strong>Qualitative Study: </strong></mark><mark class="highlight-gray">Guerrilla User Interviews</mark></h2></div><div style="display:contents" dir="auto"><h3 id="25c36fd4-09d8-80cf-862f-f577c3803da5" class=""><strong>Objective</strong></h3></div><div style="display:contents" dir="auto"><p id="25c36fd4-09d8-80e1-a8d2-dbd9f28af9d3" class="">To understand user behaviors, preferences, and coping mechanisms when faced with inaccurate information.</p></div><div style="display:contents" dir="auto"><h3 id="25c36fd4-09d8-80c9-b285-e67db3f54160" class="">Process</h3></div><div style="display:contents" dir="auto"><p id="25c36fd4-09d8-8067-841e-e8c1129252e3" class="">I conducted guerrilla interviews with 6 commuters, split evenly between the Fifth and McPherson and Fifth and Clyde bus stops. I used an open ended question tree to guide the conversations and gain insight into interviewees’ frustrations.</p></div><div style="display:contents" dir="auto"><ol type="1" id="25c36fd4-09d8-80b8-a7c5-e2918e846eae" class="numbered-list" start="1"><li>Which app, if any, do you use to track the bus?</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="25c36fd4-09d8-8075-8bff-c461e734a073" class="numbered-list" start="2"><li>What do you like about that app?</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="25c36fd4-09d8-80f9-ace6-cb8d2590a78e" class="numbered-list" start="3"><li>What do you dislike about it?</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="25c36fd4-09d8-8078-be73-edf5b1d73c26" class="numbered-list" start="4"><li>What do you do when the schedule is wrong or you miss a bus?</li></ol></div><div style="display:contents" dir="auto"><h2 id="25c36fd4-09d8-80c8-8716-c3afe99751be" class=""><mark class="highlight-gray"><strong>Qualitative Study: Ethnographic Research</strong></mark></h2></div><div style="display:contents" dir="auto"><h3 id="25c36fd4-09d8-808a-a889-e8945cc0f702" class="">Objective</h3></div><div style="display:contents" dir="auto"><p id="25c36fd4-09d8-80f4-b47b-f32282d23a69" class="">To observe commuters&#x27; unprompted behaviors and contextual factors that could impact their experience.</p></div><div style="display:contents" dir="auto"><h3 id="25c36fd4-09d8-8029-8881-d0393ad9854b" class="">Process</h3></div><div style="display:contents" dir="auto"><p id="25c36fd4-09d8-80ff-950e-fbcf89712782" class="">I conducted 14 ethnographic studies, observing commuters at the Fifth and McPherson (<style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">n=7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">7</span></span></span></span></span><span>﻿</span></span>) and Fifth and Clyde (<style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">n=7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">7</span></span></span></span></span><span>﻿</span></span>) bus stops. Observations included environmental factors such as crowdedness and weather, as well as commuter behaviors, noting if they appeared frantic, relaxed, or confused, for example.<br/></p></div><div style="display:contents" dir="auto"><hr id="25b36fd4-09d8-8199-bdf4-d86c34a6615a"/></div><div style="display:contents" dir="auto"><h1 id="25b36fd4-09d8-8137-8ddd-e8190d426768" class=""><mark class="highlight-blue">Research Findings</mark></h1></div><div style="display:contents" dir="auto"><h2 id="27a36fd4-09d8-804f-8b9b-d329b0680f1d" class=""><mark class="highlight-gray">Trust Gap Analysis Findings</mark></h2></div><div style="display:contents" dir="auto"><p id="27a36fd4-09d8-80f5-b2ff-f8b419f93dc3" class="">My 30-day data collection revealed discrepancies between the bus arrival times projected by the apps and their actual arrival times.</p></div><div style="display:contents" dir="auto"><p id="27a36fd4-09d8-80a5-8ed0-c3737c376ebc" class="">
+</p></div><div style="display:contents" dir="auto"><p id="27a36fd4-09d8-8065-86fc-e1f9c2e98b18" class=""><strong>Inbound Delays</strong><br/>For inbound trips, the Transit app exhibited the largest average early arrival time, with a mean delay of -2.67 minutes, closely followed by Google Maps at -2.33 minutes. Ready2Ride showed the smallest mean early arrival at -1.32 minutes. However, the median delay for both Google Maps and Transit was closer to zero (-1 minute for Transit, 0 for Google Maps), suggesting that while the average is skewed by some significantly early arrivals, a typical user experiences little to no delay. The standard deviations for Google Maps (4.85) and Transit (4.71) were considerably high, indicating a wide and inconsistent range of delay times. Ready2Ride, with a standard deviation of 2.03, provided a more consistent and predictable inbound arrival estimate.</p></div><div style="display:contents" dir="ltr"><figure id="27a36fd4-09d8-8011-8c1f-e026d29b217c" class="image"><a href="When%20Apps%20Lie%20Uncovering%20the%20Real%20Cause%20Behind%20Tra/Screenshot_2025-09-26_at_3.03.18_PM.png"><img style="width:528px" src="images/reports/when-apps-lie/graph1"/></a></figure></div><div style="display:contents" dir="auto"><p id="27a36fd4-09d8-803c-b0f8-d029a20af914" class=""><strong>Outbound Delays</strong><br/>In the outbound category, Ready2Ride reported the most significant average early arrival, with a mean delay of -3.05 minutes and a median of -3 minutes. This suggests that the application consistently overestimates travel time for outbound routes. In contrast, Google Maps and the Transit app had mean delays of -0.48 and -0.96 minutes, respectively, with a median of 0 for both. This indicates that for outbound trips, these two apps provide, on average, a more accurate arrival time. The standard deviation for Ready2Ride (3.17) was the highest in this category, while Google Maps (1.08) was the most consistent.</p></div><div style="display:contents" dir="auto"><p id="27a36fd4-09d8-80a0-9364-f66495afa985" class="">
+</p></div><div style="display:contents" dir="auto"><p id="27a36fd4-09d8-8031-98e0-d575d76785cd" class=""><strong>Conclusion</strong><br/>No app was consistently superior. Ready2Ride was more predictable for inbound trips but the least accurate for outbound, frequently reporting buses as arriving over 3 minutes early. Conversely, Google Maps and Transit were more accurate for outbound trips but suffered from high variability on inbound routes, making them feel unreliable. This forces users into almost a daily gamble where they can choose the predictable but often inaccurate early estimates of Ready2Ride, or the more accurate but volatile predictions of Google Maps and Transit.</p></div><div style="display:contents" dir="ltr"><figure id="27a36fd4-09d8-8069-acff-c4e8a6913726" class="image"><a href="When%20Apps%20Lie%20Uncovering%20the%20Real%20Cause%20Behind%20Tra/Screenshot_2025-09-26_at_3.10.39_PM.png"><img style="width:432px" src="images/reports/when-apps-lie/graph2.png"/></a></figure></div><div style="display:contents" dir="auto"><h2 id="27a36fd4-09d8-80af-9947-ff3c543f2e44" class=""><mark class="highlight-gray">Guerrilla User Interviews Findings</mark></h2></div><div style="display:contents" dir="auto"><p id="27a36fd4-09d8-800a-a2c6-d942e3ce91f8" class="">Interviews revealed the most common pain point for commuters is the phenomenon of a bus never arriving after being listed in an app, or a “ghost bus.” This unpredictability generates significant time anxiety, forcing users to “waste time waiting”, as one interviewee said. Some interviewees also expressed a feeling of powerlessness over their own schedule due to these discrepancies. Several interviewees said they often cross-reference these multiple apps as well as external sources, like the PRT Alerts Twitter account, to cope. This process reveals this issue is not a matter of user preference across apps; rather, it is a direct response to the failure of official channels to provide accurate information. This behavior adds significant cognitive load and stress to what should be a straightforward commute. </p></div><div style="display:contents" dir="auto"><p id="27a36fd4-09d8-8098-b9ed-faa395e41953" class="">
+</p></div><div style="display:contents" dir="auto"><p id="27a36fd4-09d8-807a-bb73-e19cfcdf3e11" class="">Interviews with commuters also revealed distinct user preferences with the apps available, which I summarized in this table below:<br/></p></div><div style="display:contents" dir="ltr"><table id="28736fd4-09d8-80d8-b9ab-c4f19fb307d9" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="28736fd4-09d8-80c0-b654-c62e65413cd2"><td id="QM&gt;O" class="" style="width:172.32814025878906px">App</td><td id="XSkd" class="" style="width:169.32814025878906px"><strong>Strengths</strong></td><td id="oc=w" class="" style="width:176.3229217529297px"><strong>Weaknesses</strong></td><td id="nTdo" class="" style="width:178.99827575683594px"><strong>Opportunity</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="28736fd4-09d8-8032-9ff9-ffb0d3ad1c42"><td id="QM&gt;O" class="" style="width:172.32814025878906px"><strong>Transit</strong></td><td id="XSkd" class="" style="width:169.32814025878906px">Live tracker, crowdsourced “GO” feature, using ride locations for real-time data</td><td id="oc=w" class="" style="width:176.3229217529297px">Not reliable when there aren’t live users, displays default schedule when no information is available</td><td id="nTdo" class="" style="width:178.99827575683594px">Making crowdsourcing transparent; integrate a clear status when data is weak</td></tr></div><div style="display:contents" dir="ltr"><tr id="28736fd4-09d8-803e-a1aa-fac07504f9c2"><td id="QM&gt;O" class="" style="width:172.32814025878906px"><strong>Google Maps</strong></td><td id="XSkd" class="" style="width:169.32814025878906px">Convenient, clear map UI</td><td id="oc=w" class="" style="width:176.3229217529297px">Provides illogical navigation suggestions, no way to see where the bus is in real time, displays default schedule when no information is available</td><td id="nTdo" class="" style="width:178.99827575683594px">Integrate predictive ETA modeling to override default schedules and illogical suggestions</td></tr></div><div style="display:contents" dir="ltr"><tr id="28736fd4-09d8-8067-a4d6-d8792de05020"><td id="QM&gt;O" class="" style="width:172.32814025878906px"><strong>Ready2Ride</strong></td><td id="XSkd" class="" style="width:169.32814025878906px">Does not show default schedule when no information is available</td><td id="oc=w" class="" style="width:176.3229217529297px">Difficult interface, cannot automatically find nearby bus stops/routes, have to manually input route information</td><td id="nTdo" class="" style="width:178.99827575683594px">Reduce cognitive load by adding automatic location services and a more intuitive interface</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="27a36fd4-09d8-8084-a2d5-d9fe21ca63fb" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="27a36fd4-09d8-809d-ac08-c208782bef77" class=""><mark class="highlight-gray"><strong>Ethnographic Studies Findings</strong></mark></h2></div><div style="display:contents" dir="auto"><p id="27a36fd4-09d8-800a-a93d-c4cbb168ee5b" class="">Observations at the Fifth and McPherson and Fifth and Clyde bus stops revealed how environmental factors exacerbate the problem. The observation of people waiting in 90° degree weather while waiting for a bus highlights that a delayed bus is not just an inconvenience but a physically uncomfortable experience. Commuters were seen waiting for 15+ minutes for delayed buses in pouring rain, or direct sunlight with no cover. </p></div><div style="display:contents" dir="auto"><p id="27a36fd4-09d8-802b-a86d-d0e9f872710e" class="">
+</p></div><div style="display:contents" dir="auto"><p id="27a36fd4-09d8-8037-8c70-c8f4c8c48c1c" class="">In addition to the physical discomfort of waiting, the ethnographic observations also suggested a link between delays and external factors like construction and road work; however, it was difficult to establish a definitive correlation because the study was confined to the area immediately surrounding the bus stops, not the entirety of the 71D route. What was clear, though, was the behavioral change in commuters during these delays. When a bus was significantly late, commuters appeared more distressed, anxiously looking around more often and repeatedly checking their phones for updates. This behavior reflects the increased anxiety commuters experience when real-time information is unreliable. </p></div><div style="display:contents" dir="auto"><p id="27a36fd4-09d8-805b-958c-f6d8a66e3c86" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="25b36fd4-09d8-81f2-83e2-c7a38701700a"/></div><div style="display:contents" dir="auto"><h1 id="25b36fd4-09d8-8105-8660-e456c2ad81a2" class=""><mark class="highlight-blue"><strong>Recommendations for a Redesigned System</strong></mark></h1></div><div style="display:contents" dir="auto"><p id="27a36fd4-09d8-8008-9491-f0c0b2f65f36" class="">The research clearly shows that commuters are not just looking for a new app but rather a more transparent relationship PRT. The solution, therefore, isn&#x27;t just about designing a better app, but also about redesigning a commuting system that rebuilds the deep trust that has been eroded by unreliable data.</p></div><div style="display:contents" dir="auto"><h3 id="27d36fd4-09d8-80f5-bdbf-d6369ba015b8" class=""><strong>Principles </strong></h3></div><div style="display:contents" dir="auto"><p id="27d36fd4-09d8-807d-93a7-f2a7beca771c" class="">A redesigned app must be built on three core principles: transparency, predictability, and empowerment. </p></div><div style="display:contents" dir="auto"><p id="2ec36fd4-09d8-803c-804e-eb3719742c85" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2ec36fd4-09d8-8090-83f4-cbdee370154f" class=""><strong>Transparency over Perfection</strong></p></div><div style="display:contents" dir="auto"><p id="2ec36fd4-09d8-8024-93ac-f6a72e80e805" class="">First, the app must be transparent about its data sources and any known delays. If a bus is &quot;offline&quot; or its GPS is failing, the app should explicitly state this rather than defaulting to a false schedule, which is the subject of several current user complaints. This manages expectations and reduces unpredictability anxiety from “ghost buses.” Based on interviews, understanding why data is wrong can rebuild users’ trust in the system’s honesty.</p></div><div style="display:contents" dir="auto"><p id="2ec36fd4-09d8-8060-a253-f2ca7140f900" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2ec36fd4-09d8-8079-b130-d8377c92f7ff" class=""><strong>Predictive Modeling</strong></p></div><div style="display:contents" dir="auto"><p id="2ec36fd4-09d8-80d6-b286-d6e5cf0c58dc" class="">Second, the app should prioritize predictability. This involves going beyond reporting a bus&#x27;s current location to using predictive algorithms to account for variables like construction and historical delays involved with certain events, such as the Pittsburgh marathon which involves several bus route closures. The app must combine current GPS data with such predictive algorithms that also learn from regular failures, like recognizing that this bus is consistently 8 minutes late. The research findings suggest that consistent accuracy, even if imperfect, can rebuild trust better than unpredictable accuracy.</p></div><div style="display:contents" dir="auto"><p id="2ec36fd4-09d8-80fc-ae76-d493108bbce1" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2ec36fd4-09d8-8006-8889-cae318b53e4e" class=""><strong>Empowerment</strong></p></div><div style="display:contents" dir="auto"><p id="2ec36fd4-09d8-8085-ba0d-fd8573e33963" class="">Lastly, the app should formally integrate a user feedback loop so commuters can report discrepancies and create a community-verified truth. Something as simple as a button that allows other riders to know that a bus that seemed to have “disappeared” actually arrived at their stop would provide valuable information to users down the bus line who may have otherwise left their stop. Interviewees’ enthusiasm for crowdsourced features suggests this can strengthen trust in the system through shared ownership.</p></div><div style="display:contents" dir="auto"><p id="28736fd4-09d8-8007-afb9-cee1c39ec75b" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="28736fd4-09d8-807b-87ff-e650823fb9f9" class=""><strong>Conclusion and Next Steps</strong></h3></div><div style="display:contents" dir="auto"><p id="27d36fd4-09d8-8014-a0a0-ce7d34cbdf28" class="">The most successful solution will be one that acknowledges that a digital product can only be as effective as the real-world service it represents. The problem is more than a technological failure. The technology failure that was uncovered in this analysis is a symptom of underlying operational issues. </p></div><div style="display:contents" dir="auto"><p id="2ec36fd4-09d8-8024-8205-fcf9289d369d" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2ec36fd4-09d8-809b-9aa5-e9d914c1e519" class="">While a redesigned app can mitigate anxiety with better data, it cannot fix the physical discomfort of the commute. My ethnographic research highlighted a critical need for PRT to prioritize bus stop infrastructure, such as better shelter and seating, particularly during extreme weather. By integrating real-time digital data with physical signage at these stops, PRT can create a cohesive support system that serves all commuters, including those without smartphones.</p></div><div style="display:contents" dir="auto"><p id="2ec36fd4-09d8-80ad-adbb-d5cd8a3219b1" class="">
+</p></div><div style="display:contents" dir="auto"><p id="28736fd4-09d8-8014-a2fa-eb7e81609307" class="">Because this trust gap is rooted in both digital and physical failures, a simple app prototype would be an incomplete solution. I recognized this and shifted my focus from immediate design to advocating by documenting my findings and proposing principles to restore trust based on commuter stories and experiences. I have delivered this comprehensive report as an essential first phase to define and quantify the problem for PRT leadership in hopes to transform this research into an actionable mandate for systemic change.</p></div><div style="display:contents" dir="auto"><p id="27d36fd4-09d8-80d7-9a7f-e7d2c152e44e" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="27a36fd4-09d8-8024-9cbc-f2bef52f8bdd"/></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

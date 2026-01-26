@@ -25,6 +25,18 @@ document.addEventListener('DOMContentLoaded', function () {
 	const year = document.getElementById('year');
 	if (year) year.textContent = new Date().getFullYear();
 
-	// no contact form — contact links are static
+	// make project cards open a dedicated report page in a new tab
+	document.querySelectorAll('.project-card').forEach(card => {
+		const slug = card.dataset.project;
+		const title = card.dataset.title || '';
+		if (!slug) return;
+		card.style.cursor = 'pointer';
+		card.addEventListener('click', (e) => {
+			if (e.target.closest('a')) return; // allow inner links to work
+			const url = `report.html?project=${encodeURIComponent(slug)}&title=${encodeURIComponent(title)}`;
+			window.open(url, '_blank', 'noopener');
+		});
+	});
+
 });
 

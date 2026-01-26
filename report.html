@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Project Report</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .report-header{padding:1rem 0 0.25rem 0;display:flex;justify-content:flex-start;align-items:baseline;gap:1rem}
+    .report-title{margin:0;font-size:1.4rem;font-weight:700}
+    #report{min-height:60vh;padding:0;margin-top:1rem;outline:none;background:transparent;border:none}
+    #report img{max-width:100%;height:auto;display:block;margin:0.5rem 0}
+    .muted{color:var(--muted)}
+  </style>
+</head>
+<body>
+  <main class="container">
+    <div class="report-header">
+      <h1 id="proj-title" class="report-title">Project Report</h1>
+    </div>
+
+    <section>
+      <div id="report" class="report-content" aria-label="Project report">
+        <!-- Static report content will be loaded here from `reports/<slug>.html` -->
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function getQuery(){ return new URLSearchParams(location.search); }
+    const params = getQuery();
+    const title = params.get('title') || '';
+    const slug = params.get('project') || '';
+    document.getElementById('proj-title').textContent = title || 'Project Report';
+    if (title) document.title = title + ' — Report';
+
+    const reportEl = document.getElementById('report');
+    if (!slug) {
+      reportEl.innerHTML = '<p class="muted">No project specified. Open this page via a project card from the homepage.</p>';
+    } else {
+      const path = `reports/${slug}.html`;
+      fetch(path).then(resp => {
+        if (!resp.ok) throw new Error('not found');
+        return resp.text();
+      }).then(html => {
+        reportEl.innerHTML = html;
+      }).catch(() => {
+        reportEl.innerHTML = `<p class="muted">No report found for "${slug}". Create <strong>reports/${slug}.html</strong> and paste your final HTML (text & images) there.</p>`;
+      });
+    }
+  </script>
+  <script> (function(){ const header = document.querySelector('.report-header'); const reportEl = document.getElementById('report'); if (!header || !reportEl) return; const check = () => { const hasNotionTitle = !!reportEl.querySelector('.page-title, header > h1, article header h1, h1.page-title'); header.style.display = hasNotionTitle ? 'none' : ''; }; check(); new MutationObserver(check).observe(reportEl, { childList: true, subtree: true }); })(); </script>
+</body>
+</html>
