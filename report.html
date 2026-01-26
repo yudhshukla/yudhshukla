@@ -11,6 +11,18 @@
     #report{min-height:60vh;padding:0;margin-top:1rem;outline:none;background:transparent;border:none}
     #report img{max-width:100%;height:auto;display:block;margin:0.5rem 0}
     .muted{color:var(--muted)}
+    /* Notion import: make cover + title flush to top (scoped to injected report) */
+    #report { padding-top: 0 !important; margin-top: 0 !important; }
+    #report > header,
+    #report > article.page,
+    #report header,
+    #report .page-body { margin-top: 0 !important; padding-top: 0 !important; }
+    #report .page-cover-image { display:block; margin:0; width:100%; object-fit:cover; max-height:40vh; }
+    #report .page-title { margin-top:0 !important; margin-bottom:0.75em !important; }
+    #report .page-header-icon-with-cover { margin-top: 0 !important; }
+    /* Remove outer container top padding on this page so the cover can sit flush */
+    .container { padding-top: 0 !important; }
+    main.container { padding-top: 0 !important; }
   </style>
 </head>
 <body>
