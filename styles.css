@@ -107,7 +107,7 @@ h1, h2, h3 { margin-top: 1.25rem; margin-bottom: 0.75rem; }
   display: block;
   width: 100%;           /* fill the screen */
   max-width: 800px;      
-  height: 1px;
+  height: 2px;
   background: var(--accent-soft);
   margin: 0 auto 4rem auto;
   border-radius: 2px;

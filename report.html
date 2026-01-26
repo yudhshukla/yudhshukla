@@ -1,5 +1,5 @@
-<!-- used github copilot to handle project cards and a "report" page opening when clicked inside; I modified the styling and padding-->
-
+<!-- used github copilot a "report" page opening when the project cards were clicked inside; I modified the styling and padding for readability -->
+<!-- github copilot created the loader and mutationObserver scaffold -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -18,6 +18,7 @@
     #report > header,
     #report > article.page,
     #report header,
+    /* adjusted paddings for consistency and readability */
     #report .page-body { margin-top: 0 !important; padding-top: 0 !important; }
     #report .page-cover-image { display:block; margin:0; width:100%; object-fit:cover; max-height:40vh; }
     #report .page-title { margin-top: 2rem !important; margin-bottom:0.75em !important; }
@@ -41,6 +42,7 @@
   </main>
 
   <!--handle retrieving the correct report and safeguarding during the process of adding new projects to the page-->
+  <!--parses the project and title-->
   <script>
     function getQuery(){ return new URLSearchParams(location.search); }
     const params = getQuery();
@@ -64,6 +66,7 @@
       });
     }
   </script>
+  <!--hides header if the report page already has a title (useful for Notion imports)-->  
   <script> (function(){ const header = document.querySelector('.report-header'); const reportEl = document.getElementById('report'); if (!header || !reportEl) return; const check = () => { const hasNotionTitle = !!reportEl.querySelector('.page-title, header > h1, article header h1, h1.page-title'); header.style.display = hasNotionTitle ? 'none' : ''; }; check(); new MutationObserver(check).observe(reportEl, { childList: true, subtree: true }); })(); </script>
 </body>
 </html>
