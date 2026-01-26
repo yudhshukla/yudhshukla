@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
-	// nav toggle for small screens
+// this file handles all the interaction logic. I described which interaction featueres I wanted to github copilot, and it generated each of the sections individually: mobile nav toggling, smooth scrolling, dynamic card listings and dates. I reviewed the code to make sure it affects the correct HTML classes
+	
+	// navigation toggle for smaller screens, checks if elements are there before adding event lisetener
 	const toggle = document.querySelector('.nav-toggle');
 	const menu = document.querySelector('.nav-links');
 	if (toggle && menu) {
@@ -21,11 +23,11 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	});
 
-	// fill year in footer
+	// fill the year in footer by writing current year
 	const year = document.getElementById('year');
 	if (year) year.textContent = new Date().getFullYear();
 
-	// make project cards open a dedicated report page in a new tab
+	// make project cards open a dedicated report page in a new tab. opens new link in a new tab with the project title in the URL
 	document.querySelectorAll('.project-card').forEach(card => {
 		const slug = card.dataset.project;
 		const title = card.dataset.title || '';

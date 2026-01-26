@@ -1,3 +1,5 @@
+<!-- used github copilot to handle project cards and a "report" page opening when clicked inside; I modified the styling and padding-->
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -11,16 +13,16 @@
     #report{min-height:60vh;padding:0;margin-top:1rem;outline:none;background:transparent;border:none}
     #report img{max-width:100%;height:auto;display:block;margin:0.5rem 0}
     .muted{color:var(--muted)}
-    /* Notion import: make cover + title flush to top (scoped to injected report) */
+    /* styling for Notion imported pages, modified to maintain Notion styling rather than website styling*/
     #report { padding-top: 0 !important; margin-top: 0 !important; }
     #report > header,
     #report > article.page,
     #report header,
     #report .page-body { margin-top: 0 !important; padding-top: 0 !important; }
     #report .page-cover-image { display:block; margin:0; width:100%; object-fit:cover; max-height:40vh; }
-    #report .page-title { margin-top:0 !important; margin-bottom:0.75em !important; }
+    #report .page-title { margin-top: 2rem !important; margin-bottom:0.75em !important; }
     #report .page-header-icon-with-cover { margin-top: 0 !important; }
-    /* Remove outer container top padding on this page so the cover can sit flush */
+    /* removed excess paddings */
     .container { padding-top: 0 !important; }
     main.container { padding-top: 0 !important; }
   </style>
@@ -33,11 +35,12 @@
 
     <section>
       <div id="report" class="report-content" aria-label="Project report">
-        <!-- Static report content will be loaded here from `reports/<slug>.html` -->
+        <!-- reports from reports folder will be loaded here -->
       </div>
     </section>
   </main>
 
+  <!--handle retrieving the correct report and safeguarding during the process of adding new projects to the page-->
   <script>
     function getQuery(){ return new URLSearchParams(location.search); }
     const params = getQuery();

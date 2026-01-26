@@ -1,11 +1,13 @@
+/* I described what color schemes and layout I wanted to github copilot, and it generated this CSS file, which I modified to fix flexbox issues, spacing issues, image sizings, and general layout issues that made the website not readable on mobile */
+
 /* RESET & VARIABLES */
 :root {
   --bg: #ffffff;
   --surface: #f8fafc;
   --muted: #6b7280;
   --text: #0f172a;
-  --accent: #ffd54a; /* Bright yellow for buttons/text */
-  --accent-soft: #fff6d8;
+  --accent: #ffd54a; /* main color */
+  --accent-soft: #fff6d8; /* accent color */
   --radius: 10px;
   --container: 1100px;
 }
@@ -25,11 +27,11 @@ body {
 p { margin-top: 0.8rem; margin-bottom: 1rem; }
 h1, h2, h3 { margin-top: 1.25rem; margin-bottom: 0.75rem; }
 
-/* LAYOUT */
+/* reduced top padding here to fix the the page gap in the report pages*/
 .container {
   max-width: var(--container);
   margin: 0 auto;
-  padding: 3rem;
+  padding: 1rem 2rem; /* reduced from 3rem to 1rem top/bottom */
 }
 
 /* HEADER / NAV */
@@ -42,15 +44,35 @@ h1, h2, h3 { margin-top: 1.25rem; margin-bottom: 0.75rem; }
 .nav-toggle { display: none; background: none; border: 0; font-size: 1.25rem; }
 
 /* HERO SECTION */
-.hero { padding: 4rem 0 0.5rem 0; display: flex; flex-direction: column; gap: 0.5rem; }
+/* added padding-top here instead so only the home page gets a big padding */
+.hero { 
+  padding: 5rem 0 1rem 0; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 0.5rem; 
+}
 .hero h1 { margin: 0; font-size: 2rem; line-height: 1.1; }
 .role { color: var(--muted); margin-top: 0.5rem; font-weight: 600; }
 .bio { color: var(--muted); max-width: 60ch; margin: 0.75rem 0; }
 
-.hero-photo { display: flex; align-items: center; justify-content: flex-end; }
+/* fixed my photo so its size is reasonable on desktop and mobile */
+.hero-photo { 
+  display: flex; 
+  align-items: center; 
+  justify-content: flex-end; 
+  max-width: 300px;
+  width: 100%;
+  flex: 0 0 auto;
+}
+
 .hero-photo img {
-  display: block; width: auto; height: auto; max-width: 60%;
-  border-radius: 12px; border: 6px solid rgba(255,213,74,0.14);
+  display: block; 
+  width: 100%; 
+  height: auto; 
+  max-width: 440px; 
+  object-fit: contain;
+  border-radius: 12px; 
+  border: 6px solid rgba(255,213,74,0.14);
 }
 
 /* BUTTONS */
@@ -72,23 +94,22 @@ h1, h2, h3 { margin-top: 1.25rem; margin-bottom: 0.75rem; }
 .skills { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1rem 0; padding: 0; list-style: none; }
 .skills li { background: var(--surface); padding: 0.45rem 0.75rem; border-radius: 999px; color: var(--muted); }
 
-/* SHARED STYLES FOR SEPARATORS 
-   This creates the short, centered line above Projects and Contact 
-*/
+/* SEPARATORS */
 .projects, .contact {
   position: relative;
   padding: 4rem 0;
-  border-top: none; /* Removed the full-width border */
+  border-top: none;
 }
 
-/* The Pseudo-element that acts as the short line */
+/* changed width to make the mobile interface more readable */
 .projects::before, .contact::before {
   content: "";
   display: block;
-  width: 800px;          /* Makes the line short */
-  height: 1px;          /* Thickness */
-  background: var(--accent-soft); /* The less bright yellow */
-  margin: 0 auto 4rem auto; /* Centers it horizontally and adds space below */
+  width: 100%;           /* fill the screen */
+  max-width: 800px;      
+  height: 1px;
+  background: var(--accent-soft);
+  margin: 0 auto 4rem auto;
   border-radius: 2px;
 }
 
@@ -128,14 +149,30 @@ h2::after {
   border-radius: 6px;
 }
 
-/* RESPONSIVE */
+/* fixes for mobile, github copilot helped me debug this */
 @media (max-width: 900px) {
-  .hero { text-align: left; }
-  .hero-photo { order: 2; justify-content: flex-start; }
+  /* reduced the side padding */
+  .container { padding: 1rem 1.5rem; }
+
+  /* centered the about me and image */
+  .hero { 
+    text-align: center; 
+    padding-top: 2rem; 
+  }
+
+  /* navigation and footer changes */
   .nav-links { display: none; }
   .nav-toggle { display: block; }
   .project-grid { grid-template-columns: 1fr; }
   .site-footer p { flex-direction: column; align-items: center; }
+
+  /* mobile image adjustments */
+  .hero-photo { 
+    max-width: 100%; 
+    justify-content: center; /* center image on mobile */
+    margin-top: 1.5rem;      /* add spacing between text and image */
+  }
+  .hero-photo img { max-width: 80%; }
 }
 
 @media (min-width: 901px) {
